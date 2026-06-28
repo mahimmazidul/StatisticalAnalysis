@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: StatisticalAnalysis
 ---
 
 <p align="center">

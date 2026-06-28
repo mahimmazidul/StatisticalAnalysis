@@ -9,12 +9,12 @@ title: Home
 
 # Applied Statistical Analysis in Food Safety, Nutrition and Public Health
 
-A reproducible classical biostatistics project built on real NHANES 2017&ndash;2018 survey data. It walks through a full analysis: cleaning, descriptive statistics, assumption checks, hypothesis tests, regression with diagnostics, and PCA, with 28 publication-quality figures and a short scientific report. There is no machine learning anywhere. The point is clear statistical thinking, honest reporting, and clean reproducible code.
+A reproducible classical biostatistics project built on real NHANES 2017&ndash;2018 survey data. It walks through a full analysis: cleaning, descriptive statistics, assumption checks, hypothesis tests, regression with diagnostics, and PCA, with 28 publication-quality figures and a short scientific report. The aim is clear statistical thinking, honest reporting, and clean reproducible code.
 
 <p align="center" style="margin:1.6rem 0;">
   <a class="btn" href="report/report.pdf">Read the report (PDF)</a>
   &nbsp;
-  <a class="btn" href="https://github.com/YOUR-USERNAME/Applied-Statistical-Analysis">View the code on GitHub</a>
+  <a class="btn" href="https://github.com/mahimmazidul/StatisticalAnalysis">View the code on GitHub</a>
 </p>
 
 ---
@@ -27,7 +27,7 @@ A reproducible classical biostatistics project built on real NHANES 2017&ndash;2
 | **Sample** | 5,175 adults, 28 variables |
 | **Figures** | 28, at 300 DPI (PNG and SVG) |
 | **Tables** | 45 result tables (CSV and Markdown) |
-| **Methods** | Classical statistics only, no machine learning |
+| **Methods** | Classical statistics, with checked assumptions |
 
 ---
 
@@ -52,11 +52,11 @@ A reproducible classical biostatistics project built on real NHANES 2017&ndash;2
 - **Full regression diagnostics.** Residual checks, influence, and multicollinearity for every model.
 
 For the full write-up, the figure gallery, and the method notes, see the
-[project README on GitHub](https://github.com/YOUR-USERNAME/Applied-Statistical-Analysis)
+[project README on GitHub](https://github.com/mahimmazidul/StatisticalAnalysis)
 or the [scientific report](report/report.pdf).
 
 ---
 
 <p align="center">
-  Made by <strong>Your Name</strong> &nbsp;&middot;&nbsp; Built with <strong>Arena.ai Agent Mode</strong>
+  Made by <strong>Mazidul Islam Mahim</strong> &nbsp;&middot;&nbsp; With the help of an AI
 </p>

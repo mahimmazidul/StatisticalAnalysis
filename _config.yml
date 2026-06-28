@@ -4,6 +4,9 @@ description: >-
   survey data. Descriptive statistics, assumption-checked hypothesis tests,
   regression with full diagnostics, and PCA, with publication-quality figures.
 
+baseurl: "/StatisticalAnalysis"
+url: "https://mahimmazidul.github.io"
+
 remote_theme: pages-themes/cayman@v0.2.0
 plugins:
   - jekyll-remote-theme
@@ -17,7 +20,7 @@ kramdown:
   syntax_highlighter: rouge
   input: GFM
 
-author: Your Name
+author: Mazidul Islam Mahim
 
 exclude:
   - data/

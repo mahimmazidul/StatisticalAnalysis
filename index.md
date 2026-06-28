@@ -58,5 +58,5 @@ or the [scientific report](report/report.pdf).
 ---
 
 <p align="center">
-  Made by <strong>Mazidul Islam Mahim</strong> &nbsp;&middot;&nbsp; With the help of an AI
+  Made by <strong>Mazidul Islam Mahim</strong>&nbsp;&middot;&nbsp; With the help of an AI
 </p>

@@ -1,0 +1,8 @@
+| RaceEthnicity      | Count | Percent |
+| ------------------ | ----- | ------- |
+| Non-Hispanic White | 1778  | 34.36   |
+| Non-Hispanic Black | 1219  | 23.56   |
+| Non-Hispanic Asian | 750   | 14.49   |
+| Mexican American   | 685   | 13.24   |
+| Other Hispanic     | 483   | 9.33    |
+| Other/Multi        | 260   | 5.02    |

@@ -1,0 +1,9 @@
+| Outcome    | Grouping      | K_groups | Levene_W | Levene_p | Bartlett_chi2 | Bartlett_p | Equal_Variance_at_5pct |
+| ---------- | ------------- | -------- | -------- | -------- | ------------- | ---------- | ---------------------- |
+| BMI        | Sex           | 2        | 77.547   | 0        | 115.285       | 6.81e-27   | No                     |
+| BMI        | SmokingStatus | 3        | 4.394    | 0.0124   | 7.072         | 2.91e-02   | No                     |
+| BMI        | AgeGroup      | 4        | 21.218   | 0        | 118.414       | 1.69e-25   | No                     |
+| EnergyKcal | Sex           | 2        | 121.999  | 0        | 201.609       | 9.31e-46   | No                     |
+| EnergyKcal | AgeGroup      | 4        | 18.336   | 0        | 86.411        | 1.29e-18   | No                     |
+| SystolicBP | AgeGroup      | 4        | 67.55    | 0        | 298.499       | 2.10e-64   | No                     |
+| HDL        | Sex           | 2        | 45.029   | 0        | 42.583        | 6.77e-11   | No                     |

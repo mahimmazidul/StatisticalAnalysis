@@ -1,0 +1,9 @@
+Outcome,Group,N1,N2,Mean1,Mean2,MeanDiff,CI95_Low,CI95_High,Levene_p,Student_t,Student_p,Welch_t,Welch_p,MannWhitney_U,MannWhitney_p,Chosen_Test,Hedges_g,Effect_Magnitude,RankBiserial,Decision
+BMI,Male vs Female,2493,2682,29.38,30.29,-0.91,-1.31,-0.5,0.0,-4.447,8.89e-06,-4.447,8.89e-06,3216914.5,1.88e-02,Welch t-test,-0.123,negligible,0.038,***
+EnergyKcal,Male vs Female,2259,2401,2417.34,1824.6,592.74,538.72,646.75,0.0,21.326,7.49e-96,21.326,7.49e-96,3656770.5,3.72e-94,Welch t-test,0.63,medium,-0.348,***
+WaistCircumference,Male vs Female,2401,2527,102.7,98.93,3.77,2.83,4.72,0.0022,7.849,5.10e-15,7.849,5.10e-15,3450453.5,6.89e-17,Welch t-test,0.223,small,-0.137,***
+HDL,Male vs Female,2334,2523,48.16,57.79,-9.63,-10.45,-8.81,0.0,-23.094,4.91e-112,-23.094,4.91e-112,1792729.5,4.46e-123,Welch t-test,-0.66,medium,0.391,***
+SystolicBP,Male vs Female,2250,2350,127.75,125.39,2.36,1.23,3.49,0.0,4.118,3.88e-05,4.118,3.88e-05,2937340.0,6.81e-11,Welch t-test,0.121,negligible,-0.111,***
+FiberG,Male vs Female,2279,2412,18.35,15.45,2.9,2.27,3.53,0.0,9.036,2.39e-19,9.036,2.39e-19,3131717.0,1.38e-16,Welch t-test,0.265,small,-0.139,***
+BMI,0 vs 1,4233,942,30.02,29.08,0.95,0.43,1.47,0.0061,3.424,6.37e-04,3.424,6.37e-04,2173290.5,1.50e-05,Welch t-test,0.128,negligible,-0.09,***
+SodiumMg,Male vs Female,2257,2403,3885.87,2956.45,929.42,831.77,1027.08,0.0,18.525,9.08e-74,18.525,9.08e-74,3552245.0,6.69e-75,Welch t-test,0.547,medium,-0.31,***

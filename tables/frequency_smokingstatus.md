@@ -1,0 +1,5 @@
+| SmokingStatus | Count | Percent |
+| ------------- | ----- | ------- |
+| Never         | 3004  | 58.05   |
+| Former        | 1229  | 23.75   |
+| Current       | 942   | 18.2    |

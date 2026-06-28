@@ -1,0 +1,5 @@
+| Model                                 | N    | Shapiro_resid_W | Shapiro_resid_p | BreuschPagan_LM | BreuschPagan_p | DurbinWatson | Mean_Leverage | N_HighCooks | Max_Cooks | Homoscedastic_at_5pct | Normal_Resid_at_5pct |
+| ------------------------------------- | ---- | --------------- | --------------- | --------------- | -------------- | ------------ | ------------- | ----------- | --------- | --------------------- | -------------------- |
+| BMI ~ Waist                           | 4928 | 0.9602          | 8.96e-35        | 345.092         | 4.96e-77       | 2.027        | 0.0004        | 276         | 0.0358    | No                    | No                   |
+| BMI ~ demographic + diet              | 4109 | 0.9426          | 2.77e-37        | 105.213         | 2.05e-20       | 1.935        | 0.0017        | 193         | 0.0167    | No                    | No                   |
+| SystolicBP ~ Age + BMI + Sex + Sodium | 4215 | 0.9656          | 1.43e-30        | 187.607         | 1.73e-39       | 1.995        | 0.0012        | 219         | 0.0143    | No                    | No                   |

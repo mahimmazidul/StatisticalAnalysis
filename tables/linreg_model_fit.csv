@@ -1,0 +1,4 @@
+Model,N,R2,Adj_R2,F,F_p,AIC,BIC
+BMI ~ Waist (simple),4928,0.8152,0.8151,21723.967,0.00e+00,25060.5,25073.5
+BMI ~ demographic + diet (multiple),4109,0.0243,0.0229,17.041,1.52e-19,27995.9,28040.1
+SystolicBP ~ Age + BMI + Sex + Sodium,4215,0.235,0.2343,323.349,6.05e-243,35770.9,35802.6

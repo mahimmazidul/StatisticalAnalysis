@@ -1,0 +1,6 @@
+| BMICategory | Count | Percent |
+| ----------- | ----- | ------- |
+| Obese       | 2171  | 41.95   |
+| Overweight  | 1667  | 32.21   |
+| Normal      | 1255  | 24.25   |
+| Underweight | 82    | 1.58    |

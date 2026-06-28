@@ -1,0 +1,134 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+:root {
+  --teal: #264653;
+  --green: #2a9d8f;
+  --sand: #e9c46a;
+  --orange: #e76f51;
+  --ink: #2b2b2b;
+}
+
+.page-header {
+  background-color: var(--teal);
+  background-image: linear-gradient(120deg, #1f3a44 0%, var(--teal) 45%, var(--green) 100%);
+  padding: 3.5rem 1rem;
+}
+
+.page-header .project-name {
+  font-size: 2.4rem;
+  letter-spacing: 0.2px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.page-header .project-tagline {
+  color: #e7f3f1;
+  font-weight: 400;
+  opacity: 0.95;
+}
+
+.btn {
+  border-radius: 6px;
+  border-color: rgba(255, 255, 255, 0.5);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.main-content {
+  max-width: 70rem;
+  color: var(--ink);
+  font-size: 1.04rem;
+  line-height: 1.7;
+}
+
+.main-content h1,
+.main-content h2 {
+  color: var(--teal);
+  border-bottom: 2px solid #eef2f1;
+  padding-bottom: 0.3rem;
+  margin-top: 2.4rem;
+}
+
+.main-content h3 {
+  color: var(--green);
+  margin-top: 1.8rem;
+}
+
+.main-content a {
+  color: var(--green);
+}
+
+.main-content a:hover {
+  color: var(--orange);
+}
+
+.main-content img {
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(31, 58, 68, 0.12);
+  margin: 0.6rem 0;
+}
+
+.main-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.2rem 0;
+  font-size: 0.95rem;
+}
+
+.main-content table th {
+  background-color: var(--teal);
+  color: #fff;
+  text-align: left;
+}
+
+.main-content table th,
+.main-content table td {
+  border: 1px solid #e3e8e7;
+  padding: 0.55rem 0.7rem;
+}
+
+.main-content table tr:nth-child(even) {
+  background-color: #f7faf9;
+}
+
+.main-content blockquote {
+  border-left: 4px solid var(--green);
+  background: #f3f9f8;
+  color: #3a4a48;
+  padding: 0.8rem 1.1rem;
+  border-radius: 0 6px 6px 0;
+}
+
+.main-content pre,
+.main-content code {
+  border-radius: 6px;
+}
+
+.main-content pre {
+  border: 1px solid #e6ebea;
+}
+
+details {
+  background: #f7faf9;
+  border: 1px solid #e3e8e7;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin: 1rem 0;
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--teal);
+}
+
+.site-footer {
+  border-top: 1px solid #e6ebea;
+  color: #6a7775;
+}

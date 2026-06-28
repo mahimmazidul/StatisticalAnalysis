@@ -15,5 +15,7 @@ report:
 	python -m src.build_report
 
 clean:
-	rm -f figures/*.png figures/*.svg tables/*.csv tables/*.md
+	find figures -name '*.png' ! -name 'banner.png' -delete
+	find figures -name '*.svg' ! -name 'banner.svg' -delete
+	rm -f tables/*.csv tables/*.md
 	rm -f data/processed/*.csv report/report.pdf

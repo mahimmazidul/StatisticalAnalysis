@@ -1,0 +1,35 @@
+title: Applied Statistical Analysis in Food Safety, Nutrition and Public Health
+description: >-
+  A reproducible classical biostatistics project built on real NHANES 2017-2018
+  survey data. Descriptive statistics, assumption-checked hypothesis tests,
+  regression with full diagnostics, and PCA, with publication-quality figures.
+
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+show_downloads: true
+
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+  input: GFM
+
+author: Your Name
+
+exclude:
+  - data/
+  - "*.XPT"
+  - src/
+  - notebooks/
+  - workflow/
+  - Makefile
+  - requirements.txt
+  - environment.yml
+  - LICENSE
+
+include:
+  - figures/
+  - report/

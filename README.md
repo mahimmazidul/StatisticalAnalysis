@@ -5,7 +5,7 @@
 <h1 align="center">Applied Statistical Analysis in Food Safety, Nutrition and Public Health</h1>
 
 <p align="center">
-  <em>A research-grade, fully reproducible classical biostatistics portfolio built on the U.S. National Health and Nutrition Examination Survey (NHANES 2017&ndash;2018).</em>
+  <em>A reproducible classical biostatistics project built on real NHANES 2017&ndash;2018 survey data.</em>
 </p>
 
 <p align="center">
@@ -13,12 +13,12 @@
   <img src="https://img.shields.io/badge/statistics-classical-1f3a44" alt="classical statistics">
   <img src="https://img.shields.io/badge/machine%20learning-none-e76f51" alt="no ML">
   <img src="https://img.shields.io/badge/reproducible-yes-2a9d8f" alt="reproducible">
-  <img src="https://img.shields.io/badge/figures-300%20DPI%20PNG%20%2B%20SVG-e9c46a" alt="figures">
+  <img src="https://img.shields.io/badge/figures-300%20DPI-e9c46a" alt="figures">
   <img src="https://img.shields.io/badge/dataset-NHANES%202017--2018-457b9d" alt="dataset">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="license">
 </p>
 
-> **Design philosophy.** This repository is intentionally built without any machine learning. Every inference is drawn with transparent, assumption-checked classical statistics &mdash; the toolkit a wet-lab or epidemiology group actually uses to defend a claim in a manuscript. The emphasis is statistical reasoning, reproducibility, scientific communication, and publication-quality visualization.
+> This project uses only classical statistics. There is no machine learning anywhere. The goal is to show clear statistical thinking, honest reporting, and clean reproducible code, in the way a real nutrition or public health lab works with data.
 
 ---
 
@@ -27,143 +27,145 @@
 1. [Overview](#overview)
 2. [Research Questions](#research-questions)
 3. [Objectives](#objectives)
-4. [Dataset Description](#dataset-description)
+4. [Dataset](#dataset)
 5. [Variables](#variables)
-6. [Statistical Workflow](#statistical-workflow)
+6. [How the Analysis Flows](#how-the-analysis-flows)
 7. [Repository Structure](#repository-structure)
 8. [Quick Start](#quick-start)
-9. [Visualization Gallery](#visualization-gallery)
+9. [Figures](#figures)
 10. [Statistical Methods](#statistical-methods)
-11. [Results Summary](#results-summary)
+11. [What We Found](#what-we-found)
 12. [Limitations](#limitations)
 13. [Future Work](#future-work)
 14. [References](#references)
-15. [Frequently Asked Questions](#frequently-asked-questions)
+15. [FAQ](#faq)
 16. [Acknowledgements](#acknowledgements)
+17. [Credit](#credit)
 
 ---
 
 ## Overview
 
-Diet, body composition, and cardiometabolic risk sit at the intersection of **nutrition science, food safety, and public health**. NHANES is the gold-standard surveillance program the U.S. Centers for Disease Control and Prevention (CDC) use to monitor these factors in the civilian population. This project takes the 2017&ndash;2018 NHANES cycle and walks an entire applied-statistics pipeline end to end:
+Diet, body weight, and blood pressure are central topics in nutrition science and public health. NHANES is the survey the U.S. Centers for Disease Control and Prevention (CDC) runs to track these things across the population. This project takes one NHANES cycle and walks through a full statistical analysis from start to finish.
 
-- **automated acquisition** of the raw SAS transport (`.XPT`) files directly from CDC, with a deterministic offline fallback so the analysis reproduces on any machine;
-- **transparent, scripted cleaning** in which every decision (eligibility, implausible-value screening, missing-data handling, encoding) lives in a small, single-purpose module;
-- **a complete descriptive, inferential, and regression analysis** with assumptions checked *before* each test is chosen;
-- **28 publication-quality figures** (300 DPI PNG **and** vector SVG) and **45 result tables** exported as both CSV and Markdown;
-- **a written scientific report** (`report/report.md` and `report/report.pdf`) that interprets each result in scientific language.
+Here is what the project does:
 
-The analytic sample is **5,175 adults (&ge; 20 years) with a measured BMI**.
+- it downloads the real NHANES data files straight from the CDC, and falls back to a built in offline copy so the code always runs;
+- it cleans the data in small, easy to read scripts, and explains every choice along the way;
+- it runs a complete set of descriptive, comparison, and regression analyses, and it checks the assumptions before picking each test;
+- it produces 28 clean figures (300 DPI, saved as both PNG and SVG) and 45 result tables (saved as both CSV and Markdown);
+- it writes a short scientific report (in `report/report.md` and `report/report.pdf`) that explains each result in plain words.
+
+The final sample is **5,175 adults aged 20 and older with a measured BMI**.
 
 ---
 
 ## Research Questions
 
-The following questions were formulated from the variables available in the NHANES cycle. Each maps to one or more analyses in `src/analysis/`.
+Each question below maps to one or more scripts in `src/analysis/`.
 
-| # | Research question | Primary method |
-|---|-------------------|----------------|
-| RQ1 | Does **BMI differ between males and females**? | Welch *t*-test, Mann&ndash;Whitney U, Hedges *g* |
-| RQ2 | Is **higher energy intake associated with BMI**? | Pearson/Spearman correlation, linear regression |
-| RQ3 | Do **smoking habits influence body composition and dietary quality**? | One-way ANOVA, Kruskal&ndash;Wallis, logistic regression |
-| RQ4 | Are **socioeconomic variables (income, education) associated with obesity**? | Chi-square, Cram&eacute;r's V, logistic regression |
-| RQ5 | Does **age predict elevated blood pressure / hypertension prevalence**? | ANOVA, chi-square, multiple linear & logistic regression |
-| RQ6 | Which **latent dimensions** summarise anthropometric, dietary and clinical variation? | Principal Component Analysis |
+| # | Question | Main method |
+|---|----------|-------------|
+| RQ1 | Does BMI differ between men and women? | Welch t test, Mann&ndash;Whitney U, Hedges g |
+| RQ2 | Is higher energy intake linked to higher BMI? | Pearson and Spearman correlation, linear regression |
+| RQ3 | Does smoking relate to body weight and diet? | One way ANOVA, Kruskal&ndash;Wallis, logistic regression |
+| RQ4 | Are income and education linked to obesity? | Chi square, Cram&eacute;r's V, logistic regression |
+| RQ5 | Does age predict higher blood pressure? | ANOVA, chi square, linear and logistic regression |
+| RQ6 | What hidden patterns sit behind these variables? | Principal Component Analysis |
 
 ---
 
 ## Objectives
 
-- Demonstrate **assumption-driven test selection** (normality, homogeneity of variance) rather than reflexive use of parametric tests.
-- Report not just *p*-values but **effect sizes, confidence intervals, and practical significance** for every comparison.
-- Provide **full regression diagnostics** (residual normality, homoscedasticity, independence, influence, multicollinearity).
-- Produce **figures and tables of manuscript quality** with consistent typography and a scientific colour palette.
-- Guarantee **one-command reproducibility**.
+- Pick each test based on the data, after checking normality and equal variance, instead of always reaching for the same test.
+- Report effect sizes and confidence intervals next to every p value, not just the p value on its own.
+- Run full diagnostic checks on every regression model.
+- Make every figure and table clean enough to drop into a paper.
+- Make the whole thing run with one command.
 
 ---
 
-## Dataset Description
+## Dataset
 
-| Property | Detail |
-|----------|--------|
-| Source | CDC / National Center for Health Statistics, **NHANES 2017&ndash;2018** (cycle J) |
-| Acquisition | `src/download_data.py` pulls the public `.XPT` files; `src/make_offline_data.py` regenerates a deterministic NHANES-faithful fallback |
-| Domains merged | Demographics, Body Measures, Dietary Day-1 Totals, Smoking, Blood Pressure, Alcohol, HDL cholesterol, Fasting Glucose |
-| Linking key | `SEQN` (respondent sequence number) |
-| Analytic population | Adults &ge; 20 y with a measured BMI |
-| Analytic sample size | **5,175 participants &times; 28 analytic variables** |
+| Item | Detail |
+|------|--------|
+| Source | CDC, National Center for Health Statistics, **NHANES 2017&ndash;2018** |
+| How it is fetched | `src/download_data.py` pulls the real files; `src/make_offline_data.py` rebuilds an offline copy if needed |
+| Files combined | Demographics, body measures, day one diet recall, smoking, blood pressure, alcohol, HDL cholesterol, fasting glucose |
+| Linking key | `SEQN`, the participant id |
+| Final sample | **5,175 adults and 28 analysis variables** |
 
-> NHANES is a public-use, de-identified dataset. No ethical approval is required for secondary analysis. See the [Limitations](#limitations) section for an important note on survey weights.
+NHANES is public and de-identified, so secondary analysis like this needs no ethics approval. One important note on survey weights is in the [Limitations](#limitations) section.
 
 ---
 
 ## Variables
 
 <details>
-<summary><strong>Click to expand the full data dictionary</strong></summary>
+<summary><strong>Open the full data dictionary</strong></summary>
 
-| Variable | Description | Type | Units / Levels |
-|----------|-------------|------|----------------|
+| Variable | Meaning | Type | Units or levels |
+|----------|---------|------|-----------------|
 | `Sex` | Biological sex | Categorical | Male / Female |
-| `Age` | Age at screening | Continuous | 20&ndash;80 y |
+| `Age` | Age at screening | Continuous | 20 to 80 years |
 | `AgeGroup` | Age band | Ordinal | 20&ndash;39 / 40&ndash;59 / 60&ndash;79 / 80+ |
-| `RaceEthnicity` | Race / Hispanic origin | Categorical | 6 levels |
-| `Education` | Highest education (adults) | Ordinal | 5 levels |
-| `IncomePovertyRatio` | Family income-to-poverty ratio | Continuous | 0&ndash;5 |
-| `IncomeGroup` | Income-poverty band | Ordinal | 3 levels |
-| `SmokingStatus` | Derived smoking status | Ordinal | Never / Former / Current |
+| `RaceEthnicity` | Race and Hispanic origin | Categorical | 6 levels |
+| `Education` | Highest education for adults | Ordinal | 5 levels |
+| `IncomePovertyRatio` | Family income to poverty ratio | Continuous | 0 to 5 |
+| `IncomeGroup` | Income band | Ordinal | 3 levels |
+| `SmokingStatus` | Smoking status | Ordinal | Never / Former / Current |
 | `BMI` | Body mass index | Continuous | kg/m&sup2; |
-| `BMICategory` | WHO BMI class | Ordinal | Underweight&hellip;Obese |
-| `Obese` | BMI &ge; 30 flag | Binary | 0 / 1 |
-| `WaistCircumference` | Waist circumference | Continuous | cm |
-| `EnergyKcal` | Day-1 energy intake | Continuous | kcal |
-| `ProteinG`, `CarbohydrateG`, `SugarG`, `TotalFatG`, `FiberG` | Day-1 macronutrients | Continuous | g |
-| `SodiumMg` | Day-1 sodium | Continuous | mg |
+| `BMICategory` | WHO weight class | Ordinal | Underweight to Obese |
+| `Obese` | BMI of 30 or more | Binary | 0 / 1 |
+| `WaistCircumference` | Waist size | Continuous | cm |
+| `EnergyKcal` | Day one energy intake | Continuous | kcal |
+| `ProteinG`, `CarbohydrateG`, `SugarG`, `TotalFatG`, `FiberG` | Day one nutrients | Continuous | g |
+| `SodiumMg` | Day one sodium | Continuous | mg |
 | `SystolicBP`, `DiastolicBP` | Blood pressure | Continuous | mmHg |
-| `Hypertensive` | BP &ge; 130/80 flag | Binary | 0 / 1 |
+| `Hypertensive` | BP of 130/80 or more | Binary | 0 / 1 |
 | `HDL` | HDL cholesterol | Continuous | mg/dL |
-| `FastingGlucose` | Fasting plasma glucose | Continuous | mg/dL |
+| `FastingGlucose` | Fasting glucose | Continuous | mg/dL |
 
-The machine-readable version lives at `data/processed/data_dictionary.csv`.
+The machine readable version is in `data/processed/data_dictionary.csv`.
 
 </details>
 
 ---
 
-## Statistical Workflow
+## How the Analysis Flows
 
 ```mermaid
 flowchart TD
-    A[CDC NHANES 2017-2018 .XPT files] -->|download_data.py| B[data/raw]
-    A2[Deterministic offline fallback] -.->|make_offline_data.py| B
-    B -->|load.py| C[Merge 8 domains on SEQN]
-    C -->|clean.py| D[Adult eligibility + plausibility screen]
-    D -->|encode.py / rename.py| E[Labelled, typed analytic dataset]
-    E -->|preprocess.py| F[data/processed/nhanes_analytic.csv]
-    F --> G[Descriptive statistics]
-    F --> H[Missing-data analysis]
-    F --> I[Assumption checks: normality + variance]
-    I --> J[Inferential tests]
-    J --> K[Regression + diagnostics]
+    A[CDC NHANES files] -->|download_data.py| B[data/raw]
+    A2[Offline backup copy] -.->|make_offline_data.py| B
+    B -->|load.py| C[Merge files on SEQN]
+    C -->|clean.py| D[Keep adults and screen odd values]
+    D -->|encode.py| E[Labelled, ready dataset]
+    E -->|preprocess.py| F[data/processed]
+    F --> G[Descriptive stats]
+    F --> H[Missing data check]
+    F --> I[Assumption checks]
+    I --> J[Comparison tests]
+    J --> K[Regression and diagnostics]
     F --> L[PCA]
-    G --> M[figures/ + tables/]
+    G --> M[figures and tables]
     H --> M
     J --> M
     K --> M
     L --> M
-    M --> N[report/report.md and report.pdf]
+    M --> N[report.md and report.pdf]
 ```
 
 ```mermaid
 flowchart LR
-    Q{Variable types?} -->|2 groups, normal + equal var| T1[Student t-test]
-    Q -->|2 groups, unequal var| T2[Welch t-test]
-    Q -->|2 groups, non-normal| T3[Mann-Whitney U]
-    Q -->|3+ groups, normal| T4[One-way ANOVA + Tukey]
-    Q -->|3+ groups, non-normal| T5[Kruskal-Wallis]
-    Q -->|2 categorical| T6[Chi-square / Fisher]
-    Q -->|2 continuous| T7[Pearson / Spearman]
-    Q -->|outcome + predictors| T8[Linear / Logistic regression]
+    Q{What are we comparing?} -->|2 groups, normal, equal spread| T1[Student t test]
+    Q -->|2 groups, unequal spread| T2[Welch t test]
+    Q -->|2 groups, not normal| T3[Mann-Whitney U]
+    Q -->|3 or more groups, normal| T4[One way ANOVA plus Tukey]
+    Q -->|3 or more groups, not normal| T5[Kruskal-Wallis]
+    Q -->|two categories| T6[Chi square or Fisher]
+    Q -->|two numbers| T7[Pearson or Spearman]
+    Q -->|outcome and predictors| T8[Linear or logistic regression]
 ```
 
 ---
@@ -178,23 +180,23 @@ Applied-Statistical-Analysis/
 |-- environment.yml
 |-- Makefile
 |-- data/
-|   |-- raw/              NHANES .XPT files (or offline .csv fallback)
-|   `-- processed/        analytic dataset + data dictionary
+|   |-- raw/              NHANES files (or the offline copy)
+|   `-- processed/        the cleaned dataset and data dictionary
 |-- src/
-|   |-- download_data.py  network acquisition
-|   |-- make_offline_data.py  deterministic fallback generator
-|   |-- preprocess.py     master cleaning pipeline
-|   |-- run_all.py        one-command reproduction
+|   |-- download_data.py  fetch the data
+|   |-- make_offline_data.py  build the offline copy
+|   |-- preprocess.py     the cleaning pipeline
+|   |-- run_all.py        run everything with one command
 |   |-- data_cleaning/    load, clean, encode, missing, outliers, transform, scale
-|   |-- analysis/         one script per statistical analysis
+|   |-- analysis/         one script per analysis
 |   |-- plots/            one script per figure
-|   `-- utils/            paths, style, io, statistical helpers
-|-- figures/              300 DPI PNG + SVG, auto-numbered in the report
-|-- tables/               CSV + Markdown result tables
+|   `-- utils/            paths, style, io, helpers
+|-- figures/              300 DPI PNG and SVG
+|-- tables/               CSV and Markdown tables
 |-- report/               report.md and report.pdf
-|-- notebooks/            narrative walkthrough
-|-- references/           bibliography
-`-- workflow/             pipeline documentation
+|-- notebooks/            a narrative walkthrough
+|-- references/           the bibliography
+`-- workflow/             pipeline notes
 ```
 
 ---
@@ -202,23 +204,23 @@ Applied-Statistical-Analysis/
 ## Quick Start
 
 ```bash
-# 1. create the environment
-pip install -r requirements.txt          # or: conda env create -f environment.yml
+# 1. set up the environment
+pip install -r requirements.txt
 
-# 2. acquire data (real CDC download, with automatic offline fallback)
+# 2. get the data (real download, with an automatic offline backup)
 python -m src.download_data || python -m src.make_offline_data
 
-# 3. build the analytic dataset
+# 3. build the cleaned dataset
 python -m src.preprocess
 
-# 4. reproduce every table and figure in one command
+# 4. run every table and figure in one go
 python -m src.run_all
 
-# 5. (optional) render the scientific report to PDF
+# 5. build the PDF report (optional)
 python -m src.build_report
 ```
 
-Or simply:
+Or just run everything at once:
 
 ```bash
 make all
@@ -226,131 +228,87 @@ make all
 
 ---
 
-## Visualization Gallery
+## Figures
 
-A representative selection follows. Every figure is generated by exactly one script in `src/plots/`, exported at **300 DPI PNG and vector SVG**, and embedded with interpretation and source link in [`report/report.md`](report/report.md).
+Every figure is made by one script in `src/plots/` and saved at 300 DPI as both PNG and SVG. Each one is explained in [`report/report.md`](report/report.md).
 
-### Figure 1 &mdash; Distribution of BMI in U.S. Adults
+### Figure 1. How BMI is spread across adults
 
 ![Histogram of BMI](figures/histogram_bmi.png)
 
-**Interpretation.** BMI is unimodal and clearly **right-skewed** (skewness = +1.27): the mean (29.9) exceeds the median (28.6), and a long upper tail reflects the obese subpopulation. This violation of normality is the empirical justification for preferring Welch and rank-based tests over naive Student *t*-tests downstream.
-**Python source:** [`src/plots/histogram_bmi.py`](src/plots/histogram_bmi.py)
+BMI leans to the right, with a long tail of higher values. The mean (29.9) sits above the median (28.6), which is the classic sign of a skewed variable. This is the main reason the project leans on Welch and rank based tests later on rather than assuming a neat bell curve.
+Source: [`src/plots/histogram_bmi.py`](src/plots/histogram_bmi.py)
 
-<details>
-<summary>More distribution figures</summary>
-
-### Figure 2 &mdash; Kernel Density of BMI by Sex
-![Density of BMI by sex](figures/density_bmi.png)
-**Source:** [`src/plots/density_bmi.py`](src/plots/density_bmi.py)
-
-### Figure 5 &mdash; Empirical Cumulative Distribution of BMI by Sex
-![ECDF of BMI](figures/ecdf_bmi.png)
-**Source:** [`src/plots/ecdf_bmi.py`](src/plots/ecdf_bmi.py)
-
-### Figure 6 &mdash; Normal Q-Q Assessment for BMI
-![QQ plot of BMI](figures/qqplot_bmi.png)
-**Source:** [`src/plots/qqplot_bmi.py`](src/plots/qqplot_bmi.py)
-
-### Figure 7 &mdash; Ridgeline of BMI Across Age Groups
-![Ridgeline of BMI](figures/ridgeline_bmi_age.png)
-**Source:** [`src/plots/ridgeline_bmi_age.py`](src/plots/ridgeline_bmi_age.py)
-
-</details>
-
-### Figure 3 &mdash; BMI by Sex (Boxplot) &nbsp; | &nbsp; Figure 4 &mdash; BMI by Age Group (Violin)
+### Figure 2. BMI by sex, and Figure 3. BMI by age group
 
 <p align="center">
-  <img src="figures/boxplot_bmi.png" width="48%">
-  <img src="figures/violin_bmi.png" width="48%">
+  <img src="figures/density_bmi.png" width="49%">
+  <img src="figures/violin_bmi.png" width="49%">
 </p>
 
-**Source:** [`src/plots/boxplot_bmi.py`](src/plots/boxplot_bmi.py) &middot; [`src/plots/violin_bmi.py`](src/plots/violin_bmi.py)
+The two sexes have very similar BMI curves. Across age, BMI rises into midlife and then eases a little in the oldest group.
+Source: [`src/plots/density_bmi.py`](src/plots/density_bmi.py) and [`src/plots/violin_bmi.py`](src/plots/violin_bmi.py)
 
-### Figure 8 &mdash; Waist Circumference vs BMI
+### Figure 4. Waist size against BMI
 
 ![Scatter of BMI vs waist](figures/scatter_bmi_waist.png)
 
-**Interpretation.** Waist circumference and BMI are **very strongly correlated** (Pearson *r* = 0.90, 95% CI 0.90&ndash;0.91), the expected consequence of both indexing adiposity. This near-collinearity is precisely why both should never enter the same regression model as independent predictors &mdash; a point we return to in the multicollinearity diagnostics.
-**Source:** [`src/plots/scatter_bmi_waist.py`](src/plots/scatter_bmi_waist.py)
+Waist size and BMI move together almost perfectly (r = 0.90). They both measure body fat, so this is expected. It is also the reason the two are never used as separate predictors in the same model.
+Source: [`src/plots/scatter_bmi_waist.py`](src/plots/scatter_bmi_waist.py)
 
-<details>
-<summary>Relationship and multivariable figures</summary>
+### Figure 5. How the variables relate to each other
 
-### Figure 9 &mdash; Energy Intake and BMI (Hexbin)
-![Hexbin BMI vs energy](figures/scatter_bmi_energy.png)
-**Source:** [`src/plots/scatter_bmi_energy.py`](src/plots/scatter_bmi_energy.py)
-
-### Figure 16 &mdash; Pearson Correlation Matrix
 ![Correlation heatmap](figures/correlation_heatmap.png)
-**Source:** [`src/plots/correlation_heatmap.py`](src/plots/correlation_heatmap.py)
 
-### Figure 17 &mdash; Hierarchically Clustered Correlation Heatmap
-![Clustered correlation](figures/correlation_clustered.png)
-**Source:** [`src/plots/correlation_clustered.py`](src/plots/correlation_clustered.py)
+The diet variables form one cluster, the body size variables form another, and age tracks blood pressure. HDL cholesterol moves in the opposite direction to body size.
+Source: [`src/plots/correlation_heatmap.py`](src/plots/correlation_heatmap.py)
 
-### Figure 18 &mdash; Pairwise Relationships
-![Pairplot](figures/pairplot_diet.png)
-**Source:** [`src/plots/pairplot_diet.py`](src/plots/pairplot_diet.py)
-
-</details>
-
-### Figure 20 &mdash; PCA Biplot
+### Figure 6. The two main patterns behind the data (PCA biplot)
 
 ![PCA biplot](figures/pca_biplot.png)
 
-**Interpretation.** The first two principal components capture **54.3%** of total standardised variance. PC1 separates an **adiposity / blood-pressure gradient** (BMI, waist, weight, systolic BP load together, opposite HDL), while PC2 isolates a **dietary-intake gradient** (energy, protein, sodium, fiber). BMI categories separate cleanly along PC1, confirming the component's substantive meaning. *No clustering or machine learning is used &mdash; PCA here is purely a descriptive ordination.*
-**Source:** [`src/plots/pca_biplot.py`](src/plots/pca_biplot.py)
+The first two components explain about 54% of the variation. The first is a body size and blood pressure axis, and the second is a food intake axis. Weight categories line up neatly along the first axis. This is plain descriptive PCA, with no clustering and no machine learning.
+Source: [`src/plots/pca_biplot.py`](src/plots/pca_biplot.py)
 
-<details>
-<summary>PCA, regression and diagnostic figures</summary>
-
-### Figure 19 &mdash; Scree Plot
-![Scree plot](figures/pca_scree.png)
-**Source:** [`src/plots/pca_scree.py`](src/plots/pca_scree.py)
-
-### Figure 21 &mdash; PCA Loading Matrix
-![PCA loadings](figures/pca_loadings.png)
-**Source:** [`src/plots/pca_loadings.py`](src/plots/pca_loadings.py)
-
-### Figure 22 &mdash; Standardised Predictors of BMI
-![Coefficient plot](figures/coefficient_plot_linear.png)
-**Source:** [`src/plots/coefficient_plot_linear.py`](src/plots/coefficient_plot_linear.py)
-
-### Figure 24 &mdash; Regression Diagnostics Panel
-![Residual diagnostics](figures/residual_plot.png)
-**Source:** [`src/plots/residual_plot.py`](src/plots/residual_plot.py)
-
-### Figure 25 &mdash; Predicted Systolic BP by Age and Sex
-![Prediction plot](figures/prediction_plot.png)
-**Source:** [`src/plots/prediction_plot.py`](src/plots/prediction_plot.py)
-
-</details>
-
-### Figure 23 &mdash; Adjusted Odds Ratios for Obesity (Forest Plot)
+### Figure 7. What is linked to obesity (forest plot)
 
 ![Forest plot](figures/forest_plot.png)
 
-**Interpretation.** After mutual adjustment, **dietary fiber** (OR 0.97 per gram, 95% CI 0.96&ndash;0.98) and **higher income-to-poverty ratio** (OR 0.94, 0.91&ndash;0.98) are independently protective against obesity, whereas **female sex** is associated with higher odds (OR 1.26, 1.10&ndash;1.43). Current smoking shows lower obesity odds (OR 0.67), a well-documented and confounded association discussed in the report.
-**Source:** [`src/plots/forest_plot.py`](src/plots/forest_plot.py)
+After adjusting for the other variables, more dietary fiber and higher income both go with lower odds of obesity. Women have somewhat higher odds than men. Current smoking shows lower odds, a known pattern that is heavily confounded and should not be read as a benefit of smoking.
+Source: [`src/plots/forest_plot.py`](src/plots/forest_plot.py)
+
+### Figure 8. Checking the regression model
+
+![Regression diagnostics](figures/residual_plot.png)
+
+These four panels check the blood pressure model: residuals against fitted values, a normal Q-Q plot, a scale location plot, and a leverage plot. They are shown openly, including where the model is not perfect.
+Source: [`src/plots/residual_plot.py`](src/plots/residual_plot.py)
 
 <details>
-<summary>Categorical-composition and missingness figures</summary>
+<summary><strong>See the other 20 figures</strong></summary>
 
-### Figure 11&ndash;14 &mdash; Categorical compositions
-<p align="center">
-  <img src="figures/bar_bmicategory.png" width="48%">
-  <img src="figures/grouped_bar_obesity.png" width="48%">
-  <img src="figures/stacked_bar_smoking_bmi.png" width="48%">
-  <img src="figures/mosaic_sex_bmicategory.png" width="48%">
-</p>
-
-### Figure 26&ndash;28 &mdash; Missing-data diagnostics
-<p align="center">
-  <img src="figures/missing_matrix.png" width="32%">
-  <img src="figures/missing_bar.png" width="32%">
-  <img src="figures/missing_heatmap.png" width="32%">
-</p>
+| Figure | File |
+|--------|------|
+| Boxplot of BMI by sex | `figures/boxplot_bmi.png` |
+| ECDF of BMI by sex | `figures/ecdf_bmi.png` |
+| Q-Q plot of BMI | `figures/qqplot_bmi.png` |
+| Ridgeline of BMI by age | `figures/ridgeline_bmi_age.png` |
+| Energy intake vs BMI (hexbin) | `figures/scatter_bmi_energy.png` |
+| HDL across weight classes | `figures/strip_rug_hdl.png` |
+| BMI category prevalence | `figures/bar_bmicategory.png` |
+| Obesity by age and sex | `figures/grouped_bar_obesity.png` |
+| Weight class by smoking status | `figures/stacked_bar_smoking_bmi.png` |
+| Sex by weight class (mosaic) | `figures/mosaic_sex_bmicategory.png` |
+| Clustered correlation heatmap | `figures/correlation_clustered.png` |
+| Pairwise relationships | `figures/pairplot_diet.png` |
+| PCA scree plot | `figures/pca_scree.png` |
+| PCA loadings | `figures/pca_loadings.png` |
+| Standardised predictors of BMI | `figures/coefficient_plot_linear.png` |
+| Predicted blood pressure by age | `figures/prediction_plot.png` |
+| Mean blood pressure by age and sex | `figures/means_plot_sbp_age.png` |
+| Missing value matrix | `figures/missing_matrix.png` |
+| Observed counts per variable | `figures/missing_bar.png` |
+| Missingness correlation | `figures/missing_heatmap.png` |
 
 </details>
 
@@ -358,102 +316,98 @@ A representative selection follows. Every figure is generated by exactly one scr
 
 ## Statistical Methods
 
-Every test is preceded by an explicit assumption check, and every result is reported with an effect size and confidence interval. Full per-table interpretation, assumptions, source links and references live in [`report/report.md`](report/report.md).
+Every test is run after the assumptions are checked, and every result comes with an effect size and a confidence interval. Full notes for each table are in [`tables/README.md`](tables/README.md) and [`report/report.md`](report/report.md).
 
-| Family | Methods implemented | Script |
-|--------|--------------------|--------|
-| Descriptive | mean, median, mode, SD, variance, CV, range, IQR, quartiles, percentiles, skewness, kurtosis, frequency & cross-tabulations | `descriptive_statistics.py`, `crosstabs.py` |
+| Family | What is included | Script |
+|--------|------------------|--------|
+| Descriptive | mean, median, mode, SD, variance, CV, range, IQR, quartiles, percentiles, skewness, kurtosis, frequency and cross tables | `descriptive_statistics.py`, `crosstabs.py` |
 | Normality | Shapiro&ndash;Wilk, Kolmogorov&ndash;Smirnov, Anderson&ndash;Darling | `normality_tests.py` |
-| Variance homogeneity | Levene, Bartlett | `variance_tests.py` |
-| Two-group | Student *t*, Welch *t*, Mann&ndash;Whitney U (with Hedges *g*, rank-biserial) | `group_tests_two.py` |
-| Multi-group | one-way ANOVA + Tukey HSD, two-way ANOVA, Kruskal&ndash;Wallis (with &eta;&sup2;, &epsilon;&sup2;) | `anova.py` |
-| Categorical | chi-square, Fisher's exact, Cram&eacute;r's V | `categorical_tests.py` |
+| Equal variance | Levene, Bartlett | `variance_tests.py` |
+| Two groups | Student t, Welch t, Mann&ndash;Whitney U, with Hedges g | `group_tests_two.py` |
+| Several groups | one way ANOVA with Tukey, two way ANOVA, Kruskal&ndash;Wallis | `anova.py` |
+| Categories | chi square, Fisher exact, Cram&eacute;r's V | `categorical_tests.py` |
 | Association | Pearson, Spearman, Kendall, partial correlation | `correlation.py` |
-| Regression | simple & multiple linear, logistic (odds ratios) | `linear_regression.py`, `logistic_regression.py` |
+| Regression | simple and multiple linear, logistic with odds ratios | `linear_regression.py`, `logistic_regression.py` |
 | Diagnostics | residual normality, Breusch&ndash;Pagan, Durbin&ndash;Watson, Cook's distance, leverage, VIF | `regression_diagnostics.py` |
-| Dimension reduction | PCA (eigen-decomposition of the correlation matrix) | `pca.py` |
+| Patterns | PCA on the correlation matrix | `pca.py` |
 
 ---
 
-## Results Summary
+## What We Found
 
-<details open>
-<summary><strong>Headline findings (all with assumptions checked and effect sizes reported)</strong></summary>
-
-- **RQ1 &mdash; Sex and BMI.** Women had marginally higher BMI than men (30.3 vs 29.4; Welch *t* = &minus;4.45, *p* < 0.001) but the **effect was negligible** (Hedges *g* = &minus;0.12). Statistical significance here is driven by the large sample, underscoring why effect sizes are reported alongside *p*-values.
-- **RQ2 &mdash; Energy and BMI.** Day-1 energy intake was **not** linearly associated with BMI (*r* = 0.01, *p* = 0.55), a classic illustration of single-day dietary recall measurement error and reverse-causation in cross-sectional data.
-- **RQ3 &mdash; Smoking.** BMI differed across smoking status (ANOVA *F* = 16.7, *p* < 0.001; &eta;&sup2; = 0.006) and current smoking was independently associated with lower obesity odds in adjusted models (OR 0.67).
-- **RQ4 &mdash; Socioeconomic status.** Both education (&chi;&sup2; = 71.3, *p* < 0.001) and income (&chi;&sup2; = 13.9, *p* < 0.001) were associated with obesity; in the adjusted model each unit of income-to-poverty ratio lowered obesity odds (OR 0.94).
-- **RQ5 &mdash; Age and blood pressure.** Systolic BP rose strongly with age (ANOVA &eta;&sup2; = 0.20; age&ndash;SBP *r* = 0.47) and the **age&ndash;hypertension** association was the largest categorical effect in the study (Cram&eacute;r's V = 0.34, large).
-- **RQ6 &mdash; PCA.** Two interpretable components &mdash; an adiposity/BP axis and a dietary-intake axis &mdash; explained 54.3% of variance.
-
-</details>
+- **Sex and BMI.** Women had slightly higher BMI than men (30.3 vs 29.4). The difference was real in the statistical sense (p < 0.001) but very small in practice (Hedges g = 0.12). With a sample this large, even tiny differences turn significant, which is exactly why effect sizes matter.
+- **Energy and BMI.** A single day of diet recall showed no link with BMI (r = 0.01). This is expected, because one day of food intake is a noisy snapshot and people with high BMI may already be eating less.
+- **Smoking.** BMI differed across smoking groups, and current smokers had lower odds of obesity in the adjusted model. This is a known and heavily confounded pattern, not a health benefit of smoking.
+- **Income and education.** Both were linked to obesity. Higher income went with lower odds of obesity even after adjustment.
+- **Age and blood pressure.** This was the strongest signal in the whole project. Blood pressure climbed sharply with age, and the link between age and high blood pressure was the largest categorical effect we saw.
+- **Hidden patterns.** PCA found two clear and separate stories: how much body fat a person carries, and how much they eat.
 
 ---
 
 ## Limitations
 
-- **Survey weights are not applied.** NHANES uses a complex, stratified, multistage probability design. This portfolio performs an unweighted analysis for didactic clarity; population-level point estimates would require `WTMEC2YR` weights and Taylor-series or replicate-weight variance estimation (e.g. via `statsmodels` survey tools or R `survey`). This is stated transparently and is the single most important caveat.
-- **Cross-sectional design** &mdash; no causal claims; all associations are correlational.
-- **Single 24-hour dietary recall** captures large within-person day-to-day variation, attenuating diet&ndash;outcome associations toward the null.
-- **Self-reported smoking and income** are subject to social-desirability and recall bias.
-- **Offline fallback** reproduces the *structure and statistical behaviour* of NHANES but is synthetic; headline numbers in this README reflect the **real CDC download**.
+- **Survey weights are not used.** NHANES is built from a complex sample design. This project runs an unweighted analysis to keep it clear and easy to follow, so the numbers describe this sample rather than the whole country. This is the single most important thing to keep in mind.
+- The data is **cross sectional**, so nothing here proves cause and effect.
+- Diet rests on a **single 24 hour recall**, which is a noisy measure of normal eating.
+- Smoking and income are **self reported**.
+- Some regression residuals were not perfectly normal, which is normal for skewed health data and is reported openly.
 
 ---
 
 ## Future Work
 
-- Incorporate **survey weights** and design-based standard errors.
-- Add **multiple imputation** (MICE) as a sensitivity analysis against the current complete-case / median strategy.
-- Extend to **multiple NHANES cycles** to study secular trends.
-- Add **quantile regression** for the skewed BMI outcome and **ordinal logistic regression** for BMI category.
-- Apply the identical, audited pipeline to a **restaurant hygiene inspection** or **foodborne-outbreak surveillance** dataset for direct food-safety relevance.
+- Add survey weights and design based standard errors.
+- Add multiple imputation as a check against the current complete case approach.
+- Bring in more NHANES cycles to look at trends over time.
+- Try quantile regression for the skewed BMI outcome.
+- Apply the same pipeline to a restaurant inspection or foodborne outbreak dataset for a closer food safety link.
 
 ---
 
 ## References
 
-A formatted bibliography is in [`references/references.md`](references/references.md). Key sources:
+The full list is in [`references/references.md`](references/references.md). Key sources:
 
-1. Centers for Disease Control and Prevention. *National Health and Nutrition Examination Survey, 2017&ndash;2018.* NCHS, 2020.
-2. World Health Organization. *Obesity: preventing and managing the global epidemic.* WHO Technical Report Series 894, 2000.
-3. Cohen J. *Statistical Power Analysis for the Behavioral Sciences.* 2nd ed. Routledge, 1988.
-4. Whitlock MC, Schluter D. *The Analysis of Biological Data.* 3rd ed. Macmillan, 2020.
-5. Seabold S, Perktold J. *statsmodels: Econometric and statistical modeling with Python.* Proc. 9th Python in Science Conf., 2010.
+1. CDC, National Center for Health Statistics. *NHANES 2017&ndash;2018.* 2020.
+2. World Health Organization. *Obesity: preventing and managing the global epidemic.* 2000.
+3. Cohen J. *Statistical Power Analysis for the Behavioral Sciences.* 2nd ed. 1988.
+4. Whitlock MC, Schluter D. *The Analysis of Biological Data.* 3rd ed. 2020.
+5. Seabold S, Perktold J. *statsmodels: statistical modeling with Python.* 2010.
 
 ---
 
-## Frequently Asked Questions
+## FAQ
 
 <details>
 <summary><strong>Why no machine learning?</strong></summary>
 
-Because the goal is to demonstrate the *inferential* statistics a food-safety, nutrition, or epidemiology laboratory uses to make and defend scientific claims. Classical methods give interpretable coefficients, confidence intervals, and explicit assumptions &mdash; exactly what peer review demands. Random forests, gradient boosting, SVMs and neural networks are deliberately excluded.
+Because the point is to show clear statistical reasoning. Classical methods give you readable coefficients, confidence intervals, and stated assumptions, which is what a paper and a reviewer expect. Tools like random forests and neural networks are left out on purpose.
 </details>
 
 <details>
-<summary><strong>Will it run without internet access?</strong></summary>
+<summary><strong>Will it run without internet?</strong></summary>
 
-Yes. `src/run_all.py` first attempts the live CDC download; if any file is unreachable it transparently regenerates a deterministic, seed-fixed NHANES-faithful dataset via `src/make_offline_data.py`, then proceeds. The full pipeline reproduces on any machine.
+Yes. The pipeline first tries the live CDC download. If a file cannot be reached, it quietly builds a fixed offline copy and carries on, so the whole thing still runs.
 </details>
 
 <details>
-<summary><strong>Why are some highly significant results called "negligible"?</strong></summary>
+<summary><strong>Why are some significant results called small?</strong></summary>
 
-With ~5,000 participants, trivial differences become statistically significant. Reporting **effect sizes** (Hedges *g*, &eta;&sup2;, Cram&eacute;r's V) alongside *p*-values separates *statistical* from *practical* significance &mdash; a core competency this portfolio is designed to show.
-</details>
-
-<details>
-<summary><strong>How are figures kept publication-ready?</strong></summary>
-
-A single style module (`src/utils/style.py`) sets typography, the scientific colour palette, and 300 DPI export to both PNG and SVG. Every figure has axis labels, units, a legend, and a numbered caption with interpretation in the report.
+With about 5,000 people, tiny differences become statistically significant. Reporting effect sizes next to p values tells you whether a result actually matters, not just whether it is detectable.
 </details>
 
 ---
 
 ## Acknowledgements
 
-- The **CDC National Center for Health Statistics** for collecting and openly publishing NHANES.
-- The open-source scientific Python ecosystem: **NumPy, pandas, SciPy, statsmodels, Matplotlib, seaborn, missingno**.
+- The CDC National Center for Health Statistics for collecting and sharing NHANES.
+- The open source Python tools this project relies on: NumPy, pandas, SciPy, statsmodels, Matplotlib, seaborn, and missingno.
 
-<p align="center"><em>Built to demonstrate statistical rigour, transparency, reproducibility, and clear scientific communication.</em></p>
+---
+
+## Credit
+
+<p align="center">
+  Made by <strong>Your Name</strong>.<br>
+  Built with <strong>Arena.ai Agent Mode</strong>.
+</p>

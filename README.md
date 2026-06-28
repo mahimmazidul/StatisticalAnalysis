@@ -17,9 +17,6 @@
   <img src="https://img.shields.io/badge/license-MIT-green" alt="license">
 </p>
 
-> A full statistical analysis of one NHANES cycle, from cleaning to a written report. The aim is clear statistical thinking, honest reporting, and clean reproducible code, in the way a real nutrition or public health lab works with data.
-
----
 
 ## Table of Contents
 
@@ -44,15 +41,14 @@ Diet, body weight, and blood pressure are central topics in nutrition science an
 
 What it does:
 
-- downloads the real NHANES files from the CDC, with a built-in offline copy so the code always runs;
-- cleans the data in small, readable scripts and explains every choice;
-- runs descriptive, comparison, and regression analyses, and checks the assumptions before each test;
-- produces 28 figures at 300 DPI (PNG and SVG) and 45 result tables (CSV and Markdown);
-- writes a short report in [`report/report.md`](report/report.md) and [`report/report.pdf`](report/report.pdf) that explains each result in plain words.
+- Downloads the real NHANES files from the CDC, with a built-in offline copy so the code always runs;
+- Cleans the data in small, readable scripts and explains every choice;
+- Runs descriptive, comparison, and regression analyses, and checks the assumptions before each test;
+- Produces around 28 figures at 300 DPI (PNG and SVG) and 45 result tables (CSV and Markdown);
+- Writes a short report in [`report/report.md`](report/report.md) and [`report/report.pdf`](report/report.pdf) that explains each result in plain words.
 
 The final sample is **5,175 adults aged 20 and older with a measured BMI**.
 
----
 
 ## Research Questions
 
@@ -65,7 +61,6 @@ The final sample is **5,175 adults aged 20 and older with a measured BMI**.
 | RQ5 | Does age predict higher blood pressure? | ANOVA, linear and logistic regression |
 | RQ6 | What hidden patterns sit behind these variables? | Principal Component Analysis |
 
----
 
 ## Dataset
 
@@ -79,7 +74,6 @@ The final sample is **5,175 adults aged 20 and older with a measured BMI**.
 
 NHANES is public and de-identified, so secondary analysis like this needs no ethics approval. The full data dictionary is in [`data/processed/data_dictionary.csv`](data/processed/data_dictionary.csv).
 
----
 
 ## How the Analysis Flows
 
@@ -105,7 +99,6 @@ flowchart TD
     M --> N[report.md and report.pdf]
 ```
 
----
 
 ## Quick Start
 
@@ -125,7 +118,6 @@ python -m src.run_all
 
 Or run everything at once with `make all`.
 
----
 
 ## Figures
 
@@ -176,8 +168,6 @@ Code: [`src/plots/forest_plot.py`](src/plots/forest_plot.py)
 These four panels check the blood pressure model: residuals against fitted values, a normal Q-Q plot, a scale location plot, and a leverage plot. They are shown openly, including where the model is not perfect.
 Code: [`src/plots/residual_plot.py`](src/plots/residual_plot.py)
 
-<details>
-<summary><strong>See the other 20 figures</strong></summary>
 
 ### Figure 9. Boxplot of BMI by sex
 ![Boxplot of BMI by sex](figures/boxplot_bmi.png)
@@ -299,9 +289,7 @@ Code: [`src/plots/missingness.py`](src/plots/missingness.py)
 This checks whether variables tend to go missing together. The lack of strong structure supports the simple complete-case approach.
 Code: [`src/plots/missingness.py`](src/plots/missingness.py)
 
-</details>
 
----
 
 ## Statistical Methods
 
@@ -320,7 +308,6 @@ Every test is run after the assumptions are checked, and every result comes with
 | Diagnostics | residual normality, Breusch&ndash;Pagan, Durbin&ndash;Watson, Cook's distance, leverage, VIF | [`regression_diagnostics.py`](src/analysis/regression_diagnostics.py) |
 | Patterns | PCA on the correlation matrix | [`pca.py`](src/analysis/pca.py) |
 
----
 
 ## What We Found
 
@@ -331,7 +318,6 @@ Every test is run after the assumptions are checked, and every result comes with
 - **Age and blood pressure.** This was the strongest signal in the project. Blood pressure climbed sharply with age, and the link between age and high blood pressure was the largest categorical effect we saw.
 - **Hidden patterns.** PCA found two clear and separate stories: how much body fat a person carries, and how much they eat.
 
----
 
 ## Limitations
 
@@ -340,13 +326,10 @@ Every test is run after the assumptions are checked, and every result comes with
 - Diet rests on a **single 24 hour recall**, a noisy measure of normal eating.
 - Smoking and income are **self reported**.
 
----
 
 ## References
 
 The full list is in [`references/references.md`](references/references.md). Key sources: CDC NHANES 2017&ndash;2018; WHO (2000); Cohen (1988); Whitlock and Schluter (2020); Seabold and Perktold (2010).
-
----
 
 ## FAQ
 
@@ -364,9 +347,6 @@ With about 5,000 people, tiny differences become statistically significant. Repo
 
 ---
 
-## Credit
-
 <p align="center">
-  Made by <strong>Mazidul Islam Mahim</strong>.<br>
-  With the help of an AI.
+  Made by <strong>Mazidul Islam Mahim</strong>.<br>With the help of an AI.
 </p>
